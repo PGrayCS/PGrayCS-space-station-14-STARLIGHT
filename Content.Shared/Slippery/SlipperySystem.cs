@@ -49,6 +49,7 @@ public sealed class SlipperySystem : EntitySystem
         SubscribeLocalEvent<SlowedOverSlipperyComponent, SlipAttemptEvent>(OnSlowedOverSlipAttempt);
         SubscribeLocalEvent<ThrownItemComponent, SlipCausingAttemptEvent>(OnThrownSlipAttempt);
         SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
+        SubscribeLocalEvent<NoSlipStatusEffectComponent, StatusEffectRelayedEvent<SlipAttemptEvent>>(OnNoSlipStatusAttempt);
         SubscribeLocalEvent<SlowedOverSlipperyComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnSlowedOverSlipAttempt(e, c, ev.Args));
         SubscribeLocalEvent<SlowedOverSlipperyComponent, InventoryRelayedEvent<GetSlowedOverSlipperyModifierEvent>>(OnGetSlowedOverSlipperyModifier);
         SubscribeLocalEvent<SlipperyComponent, EndCollideEvent>(OnEntityExit);
@@ -70,6 +71,11 @@ public sealed class SlipperySystem : EntitySystem
     private static void OnNoSlipAttempt(EntityUid uid, NoSlipComponent component, SlipAttemptEvent args)
     {
         args.NoSlip = true;
+    }
+
+    private static void OnNoSlipStatusAttempt(Entity<NoSlipStatusEffectComponent> ent, ref StatusEffectRelayedEvent<SlipAttemptEvent> args)
+    {
+        args.Args.NoSlip = true;
     }
 
     private void OnSlowedOverSlipAttempt(EntityUid uid, SlowedOverSlipperyComponent component, SlipAttemptEvent args)

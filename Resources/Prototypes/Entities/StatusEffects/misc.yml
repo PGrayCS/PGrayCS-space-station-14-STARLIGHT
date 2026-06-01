@@ -120,3 +120,11 @@
   parent: [ StatusEffectWoozy, StatusEffectSlurred ]
   id: StatusEffectDrunk
   name: drunk
+
+# Prevents the affected entity from slipping. Used by dwarves metabolizing a Manhattan.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectNoSlip
+  name: no slip
+  components:
+  - type: NoSlipStatusEffect

@@ -1790,7 +1790,6 @@
   metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
-  # Starlight edit start - Make Manhattan give dwarfs NoSlip component
   metabolisms:
     Drink:
       effects:
@@ -1799,15 +1798,14 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.06
-      - !type:GenericStatusEffect
+      # dwarves keep their footing while a Manhattan is in their system
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectNoSlip
+        type: Update
+        time: 5
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Dwarf ]
-        key: NoSlip
-        component: NoSlip
-        time: 2
-        type: Add
-    # Starlight edit end
 
 - type: reagent
   id: ManhattanProject
